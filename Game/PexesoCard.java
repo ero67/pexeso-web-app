@@ -1,4 +1,4 @@
-package Game;
+package Game.Game;
 
 public class PexesoCard {
     private CardState state= CardState.HIDDEN;
