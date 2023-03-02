@@ -1,4 +1,4 @@
-package Game.Game;
+package org.example;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -6,10 +6,9 @@ import java.util.Collections;
 public class PexesoBoard {
     public final ArrayList <PexesoCard> pexesoCardList;
     private BoardState boardState=BoardState.PLAYING;
-    private final int size;
+
 
     public PexesoBoard(int size) {
-        this.size=size;
         pexesoCardList=new ArrayList<>(size);
         ArrayList<String> pictures = new ArrayList<>();
         char letter='A';

@@ -1,4 +1,4 @@
-package Game.Game;
+package org.example;
 
 public enum BoardState {
     PLAYING, SOLVED

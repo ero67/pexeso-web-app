@@ -1,4 +1,4 @@
-package Game.Game;
+package org.example;
 
 import java.util.Scanner;
 
@@ -26,7 +26,7 @@ public class PexesoGameUI {
     }
 
     public void playTurn() {
-        cheatDisplayBoard();
+        //cheatDisplayBoard();
         System.out.println("\n");
         displayBoard();
         Scanner scanner = new Scanner(System.in);
@@ -40,7 +40,7 @@ public class PexesoGameUI {
         flip(firstCard,secondCard);
 
         displayBoard();
-        if (!flip(firstCard,secondCard)) {
+        if (flip(firstCard,secondCard)) {
             compareCards(firstCard,secondCard);
         }
 
@@ -87,7 +87,7 @@ public class PexesoGameUI {
     private void compareCards(PexesoCard firstCard,PexesoCard secondCard){
 
         if (firstCard.getValue().trim().equals(secondCard.getValue().trim())) {//testing if values of card are equal
-            System.out.println("Cards MATCH ....keep going!!!");
+          //  System.out.println("Cards MATCH ....keep going!!!");
             firstCard.setState(CardState.MATCHED);
             secondCard.setState(CardState.MATCHED);
         } else {
@@ -100,12 +100,12 @@ public class PexesoGameUI {
     private boolean flip(PexesoCard firstCard, PexesoCard secondCard){
         if(firstCard.getState()==CardState.MATCHED || secondCard.getState()==CardState.MATCHED){
             System.out.println("One of the cards is already MATCHED !!!");
-            return true;
+            return false;
         }
         else{
             firstCard.setState(CardState.FACE_UP);
             secondCard.setState((CardState.FACE_UP));
-            return false;
+            return true;
         }
     }
 }

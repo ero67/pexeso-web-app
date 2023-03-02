@@ -1,4 +1,4 @@
-package Game.Game;
+package org.example;
 
 public class PexesoCard {
     private CardState state= CardState.HIDDEN;
