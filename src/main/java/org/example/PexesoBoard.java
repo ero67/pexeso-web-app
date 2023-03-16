@@ -27,7 +27,6 @@ public class PexesoBoard {
             cardValues.add(Character.toString(letter));
             letter++;
         }
-
         // Shuffle the ArrayList of card values
         shuffle(cardValues);
 

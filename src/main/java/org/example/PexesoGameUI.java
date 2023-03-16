@@ -27,15 +27,6 @@ public class PexesoGameUI {
 
     public void playTurn() {
         System.out.println("\n");
-       /* cheatDisplayBoard();
-        displayBoard();
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Write 2 numbers of cards you want to flip in format: row1 col1 row2 col2");
-        int row1 = scanner.nextInt();
-        int col1 = scanner.nextInt();
-        int row2 = scanner.nextInt();
-        int col2 = scanner.nextInt();
-*/
         displayBoard();
         boolean validInput = false;
         int[] positions = null;
@@ -48,10 +39,8 @@ public class PexesoGameUI {
             }
         } while (!validInput);
 
-        int row1 = positions[0];
-        int col1 = positions[1];
-        int row2 = positions[2];
-        int col2 = positions[3];
+        int row1 = positions[0];int col1 = positions[1];
+        int row2 = positions[2];int col2 = positions[3];
 
         PexesoCard firstCard = pexesoBoard.getCard(row1, col1);
         PexesoCard secondCard = pexesoBoard.getCard(row2, col2);
@@ -62,7 +51,6 @@ public class PexesoGameUI {
         if (pexesoBoard.flip(firstCard, secondCard)) {
             pexesoBoard.compareCards(firstCard, secondCard);
         }
-
         System.out.println("Tries: " + tries);
     }
 
@@ -136,12 +124,11 @@ public class PexesoGameUI {
         try {
             for (int i = 0; i < 4; i++) {
                 int num = Integer.parseInt(values[i]);
-                if (num < 0 || num > this.pexesoBoard.getSize()) {
+                if (num < 0 || num > this.pexesoBoard.getSize()-1) {
                     System.out.println("Error: Invalid input - Values must be between 0 and "+(this.pexesoBoard.getSize()-1));
                     return null;
                 }
                 numbers[i] = num;
-
             }
 
             if (numbers[0] == numbers[2] && numbers[1] == numbers[3]){
