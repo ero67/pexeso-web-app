@@ -1,4 +1,9 @@
-package org.example;
+package org.example.consoleui;
+
+import org.example.core.BoardState;
+import org.example.core.CardState;
+import org.example.core.PexesoBoard;
+import org.example.core.PexesoCard;
 
 import java.util.Scanner;
 import java.util.regex.Pattern;
