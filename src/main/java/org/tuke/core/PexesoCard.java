@@ -1,4 +1,4 @@
-package org.example.core;
+package org.tuke.core;
 
 public class PexesoCard {
     private CardState state= CardState.HIDDEN;

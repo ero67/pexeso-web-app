@@ -1,14 +1,22 @@
-package org.example.consoleui;
+package org.tuke.consoleui;
 
-import org.example.core.BoardState;
-import org.example.core.CardState;
-import org.example.core.PexesoBoard;
-import org.example.core.PexesoCard;
+import org.tuke.core.BoardState;
+import org.tuke.core.CardState;
+import org.tuke.core.PexesoBoard;
+import org.tuke.core.PexesoCard;
+import org.tuke.entity.Score;
+import org.tuke.service.RatingsService;
+import org.tuke.service.RatingsServiceJDBC;
+import org.tuke.service.ScoreService;
+import org.tuke.service.ScoreServiceJDBC;
 
+import java.util.Date;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
 public class PexesoGameUI {
+    public static final ScoreService scoreService= new ScoreServiceJDBC();
+    public static final RatingsService ratingsService= new RatingsServiceJDBC();
     private final PexesoBoard pexesoBoard;
     Scanner scanner = new Scanner(System.in);
     private int tries;
@@ -18,6 +26,7 @@ public class PexesoGameUI {
     }
 
     public void play() {
+        printTopScores();
         while (pexesoBoard.getBoardState() == BoardState.PLAYING) {
             tries++;
             playTurn();
@@ -26,40 +35,56 @@ public class PexesoGameUI {
 
         System.out.println("You have won ... GG !!!");
         System.out.println("Number of tries ... " + tries);
+        saveScore();
+        printRatings();
 
+    }
+
+    private void saveScore() {
+        scoreService.addScore(new Score(System.getProperty("user.name"),"pexeso",tries,new Date()));
     }
 
 
     public void playTurn() {
+        cheatDisplayBoard();
         System.out.println("\n");
         displayBoard();
-        boolean validInput = false;
+
         int[] positions = null;
 
-        do {
-            System.out.print("Enter two card positions (e.g. 0 1 2 3): ");
-            positions = processInput(scanner);
-            if (positions != null) {
-                validInput = true;
-            }
-        } while (!validInput);
+        positions = getPositions();
 
         int row1 = positions[0];int col1 = positions[1];
-        int row2 = positions[2];int col2 = positions[3];
-
         PexesoCard firstCard = pexesoBoard.getCard(row1, col1);
-        PexesoCard secondCard = pexesoBoard.getCard(row2, col2);
-
-        pexesoBoard.flip(firstCard, secondCard);
+        boolean flip1= pexesoBoard.flip(firstCard);
 
         displayBoard();
-        if (pexesoBoard.flip(firstCard, secondCard)) {
+
+        positions=getPositions();
+
+        int row2 = positions[0];int col2 = positions[1];
+        PexesoCard secondCard = pexesoBoard.getCard(row2, col2);
+        boolean flip2= pexesoBoard.flip(secondCard);
+
+        displayBoard();
+
+        if (flip1 && flip2) {
             pexesoBoard.compareCards(firstCard, secondCard);
         }
         System.out.println("Tries: " + tries);
     }
 
-
+    private int[] getPositions() {
+        int[] positions;
+        while (true) {
+            System.out.print("Enter two card positions (e.g. 0 1 2 3): ");
+            positions = processInput(scanner);
+            if (positions != null) {
+                break;
+            }
+        }
+        return positions;
+    }
 
 
     private void displayBoard() {
@@ -82,7 +107,7 @@ public class PexesoGameUI {
                 if (card.getState() == CardState.FACE_UP || card.getState() == CardState.MATCHED) {
                     System.out.print(card.getValue() + " ");
                 } else {
-                    System.out.print("*" + " ");
+                    System.out.print("%" + " ");
                 }
             }
             System.out.println();
@@ -113,21 +138,22 @@ public class PexesoGameUI {
             System.out.println();
         }
     }
+
     private int[] processInput(Scanner scanner) {
         String input = scanner.nextLine();
-        String pattern = "^(\\d+)\\s+(\\d+)\\s+(\\d+)\\s+(\\d+)$";
+        String pattern = "^(\\d+)\\s+(\\d+)$";
         Pattern regex = Pattern.compile(pattern);
 
         if (!regex.matcher(input).matches()) {
-            System.out.println("Error: Invalid input - Please enter four digits with spaces between each number");
+            System.out.println("Error: Invalid input - Please enter two digits with spaces between them");
             return null;
         }
 
         String[] values = input.trim().split(" ");
-        int[] numbers = new int[4];
+        int[] numbers = new int[2];
 
         try {
-            for (int i = 0; i < 4; i++) {
+            for (int i = 0; i < 2; i++) {
                 int num = Integer.parseInt(values[i]);
                 if (num < 0 || num > this.pexesoBoard.getSize()-1) {
                     System.out.println("Error: Invalid input - Values must be between 0 and "+(this.pexesoBoard.getSize()-1));
@@ -135,16 +161,35 @@ public class PexesoGameUI {
                 }
                 numbers[i] = num;
             }
-
-            if (numbers[0] == numbers[2] && numbers[1] == numbers[3]){
-                System.out.println("Error: You put coordinates of the 1 card twice");
+            PexesoCard testsecondCard=pexesoBoard.getCard(Integer.parseInt(values[0]),Integer.parseInt(values[1]));
+            if(!pexesoBoard.flip(testsecondCard)){
                 return null;
             }
+            pexesoBoard.flipBack(testsecondCard);
 
             return numbers;
         } catch (NumberFormatException e) {
-            System.out.println("Error: Invalid input - Please enter four digits with spaces between each number");
+            System.out.println("Error: Invalid input - Please enter two digits with spaces between them");
             return null;
+        }
+    }
+    private void printTopScores(){
+        System.out.println("-------------------------------------------------------");
+        var scores=scoreService.getTopScores("pexeso");
+        for (int i=0;i<scores.size();i++){
+            var score=scores.get(i);
+            System.out.printf("%d. %s %d\n",(i+1),score.getPlayer(),score.getPoints());
+        }
+        System.out.println("-------------------------------------------------------");
+    }
+
+    private void printRatings(){
+        System.out.println("                      Past Ratings                        ");
+        System.out.println("----------------------------------------------------------");
+        var ratings=ratingsService.getTopRatings("pexeso");
+        for (int i=0;i<ratings.size();i++){
+            var score=ratings.get(i);
+            System.out.printf("%d. %s %d\n",(i+1),score.getPlayer(),score.getRating());
         }
     }
 }

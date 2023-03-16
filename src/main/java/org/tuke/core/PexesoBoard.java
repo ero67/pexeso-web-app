@@ -1,4 +1,4 @@
-package org.example.core;
+package org.tuke.core;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -64,7 +64,7 @@ public class PexesoBoard {
         return boardState;
     }
 
-    public boolean flip(PexesoCard firstCard, PexesoCard secondCard){
+   /* public boolean flip(PexesoCard firstCard, PexesoCard secondCard){
         if(firstCard.getState()==CardState.MATCHED || secondCard.getState()==CardState.MATCHED){
             System.out.println("One of the cards is already MATCHED !!!");
             return false;
@@ -74,11 +74,33 @@ public class PexesoBoard {
             secondCard.setState((CardState.FACE_UP));
             return true;
         }
+    }*/
+
+    public boolean flip(PexesoCard firstCard) {
+        if (firstCard.getState() == CardState.MATCHED) {
+            System.out.println("Card is already MATCHED !!!");
+            return false;
+        }else if(firstCard.getState()==CardState.FACE_UP){
+            System.out.println("Card is already flipped");
+            return false;
+        }
+        else {
+            firstCard.setState(CardState.FACE_UP);
+            return true;
+        }
+    }
+    public void flipBack(PexesoCard firstCard) {
+
+        if(firstCard.getState()==CardState.FACE_UP){
+            firstCard.setState(CardState.HIDDEN);
+
+        }
+
     }
 
-
     public void isFinished() {
-        int size = this.getSize() / 2;
+        int size = this.getSize() ;
+        //System.out.println(size);
         int matchedPairs = 0;
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
@@ -91,7 +113,7 @@ public class PexesoBoard {
                 }
             }
         }
-        if (matchedPairs == size * size / 2) {
+        if (matchedPairs == size * size) {
             this.setBoardState(BoardState.SOLVED);
         }
     }
