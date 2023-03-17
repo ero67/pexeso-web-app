@@ -64,17 +64,7 @@ public class PexesoBoard {
         return boardState;
     }
 
-   /* public boolean flip(PexesoCard firstCard, PexesoCard secondCard){
-        if(firstCard.getState()==CardState.MATCHED || secondCard.getState()==CardState.MATCHED){
-            System.out.println("One of the cards is already MATCHED !!!");
-            return false;
-        }
-        else{
-            firstCard.setState(CardState.FACE_UP);
-            secondCard.setState((CardState.FACE_UP));
-            return true;
-        }
-    }*/
+
 
     public boolean flip(PexesoCard firstCard) {
         if (firstCard.getState() == CardState.MATCHED) {

@@ -26,7 +26,7 @@ public class PexesoGameUI {
     }
 
     public void play() {
-        printTopScores();
+
         while (pexesoBoard.getBoardState() == BoardState.PLAYING) {
             tries++;
             playTurn();
@@ -40,10 +40,9 @@ public class PexesoGameUI {
 
         askForRating();
         askForComment();
-
+        printTopScores();
         printRatings();
         printComments();
-
     }
 
     private void saveScore() {
@@ -80,7 +79,7 @@ public class PexesoGameUI {
         System.out.println("Tries: " + tries);
     }
 
-    private int[] getInput() {
+    public int[] getInput() {
         int[] positions;
         while (true) {
             System.out.print("Enter two card positions (e.g. 0 1 2 3): ");
@@ -145,7 +144,7 @@ public class PexesoGameUI {
         }
     }
 
-    private int[] processInput(Scanner scanner) {
+    public int[] processInput(Scanner scanner) {
         String input = scanner.nextLine();
         String pattern = "^(\\d+)\\s+(\\d+)$";
         Pattern regex = Pattern.compile(pattern);
@@ -180,6 +179,7 @@ public class PexesoGameUI {
         }
     }
     private void printTopScores(){
+        System.out.println("                      Top Scores                        ");
         System.out.println("-------------------------------------------------------");
         var scores=scoreService.getTopScores("pexeso");
         for (int i=0;i<scores.size();i++){
@@ -197,6 +197,7 @@ public class PexesoGameUI {
             var score=ratings.get(i);
             System.out.printf("%d. %s %d\n",(i+1),score.getPlayer(),score.getRating());
         }
+        System.out.println("------------------------------------------------------------");
     }
 
     private void printComments(){
@@ -207,6 +208,7 @@ public class PexesoGameUI {
             var comment=comments.get(i);
             System.out.printf("%s %s\n",comment.getPlayer(),comment.getComment());
         }
+        System.out.println("-----------------------------------------------------------");
     }
 
     private void askForRating(){

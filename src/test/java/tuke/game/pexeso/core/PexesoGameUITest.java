@@ -1,9 +1,14 @@
 package tuke.game.pexeso.core;
 
+import org.junit.jupiter.api.Test;
+import org.tuke.consoleui.PexesoGameUI;
 import org.tuke.core.BoardState;
 import org.tuke.core.CardState;
 import org.tuke.core.PexesoBoard;
 import org.tuke.core.PexesoCard;
+
+import java.io.ByteArrayInputStream;
+import java.util.Scanner;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -27,6 +32,84 @@ class PexesoGameUITest {
         // ensure that the game state is now FINISHED
         assertEquals(BoardState.SOLVED, pexesoBoard.getBoardState());
     }
+    @org.junit.jupiter.api.Test
+    public void testFlipCardFuntion(){
+        PexesoBoard pexesoBoard = new PexesoBoard(2);
+        PexesoCard card=pexesoBoard.getCard(0,0);
+        boolean flipped=pexesoBoard.flip(card);
+        assertEquals(true,flipped);
+        assertEquals(card.getState(),CardState.FACE_UP);
+    }
+
+    @org.junit.jupiter.api.Test
+    public void testCompareCards(){
+        PexesoBoard pexesoBoard=new PexesoBoard(2);
+
+        PexesoCard card1=new PexesoCard("A");
+        PexesoCard card2=new PexesoCard("A");
+
+        boolean compared= pexesoBoard.compareCards(card1,card2);
+
+        assertEquals(true,compared);
+
+    }
+
+    @org.junit.jupiter.api.Test
+    public void testCompareCardsWrong(){
+        PexesoBoard pexesoBoard=new PexesoBoard(2);
+
+        PexesoCard card1=new PexesoCard("A");
+        PexesoCard card2=new PexesoCard("B");
+
+        boolean compared= pexesoBoard.compareCards(card1,card2);
+
+        assertEquals(false,compared);
+
+    }
+
+
+
+    @Test
+    public void testProcessInputValid() {
+        // set up input
+        ByteArrayInputStream inputStream = new ByteArrayInputStream("0 1".getBytes());
+        System.setIn(inputStream);
+        Scanner scanner = new Scanner(System.in);
+        PexesoBoard pexesoBoard=new PexesoBoard(2);
+        PexesoGameUI pexesoGame=new PexesoGameUI(pexesoBoard);
+        // execute
+        int[] result = pexesoGame.processInput(scanner);
+
+        // check
+        assertNotNull(result);
+        assertEquals(2, result.length);
+        assertEquals(0, result[0]);
+        assertEquals(1, result[1]);
+    }
+
+    @Test
+    public void testProcessInputInvalid() {
+        // set up input
+        ByteArrayInputStream inputStream = new ByteArrayInputStream("invalid input".getBytes());
+        System.setIn(inputStream);
+        Scanner scanner = new Scanner(System.in);
+        PexesoBoard pexesoBoard=new PexesoBoard(2);
+        PexesoGameUI pexesoGame=new PexesoGameUI(pexesoBoard);
+        // execute
+        int[] result = pexesoGame.processInput(scanner);
+
+        // check
+        assertNull(result);
+    }
+
+
+
+
+
+
+
+
+
 
 
 }
