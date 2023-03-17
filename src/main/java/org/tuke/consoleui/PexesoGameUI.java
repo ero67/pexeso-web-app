@@ -4,11 +4,10 @@ import org.tuke.core.BoardState;
 import org.tuke.core.CardState;
 import org.tuke.core.PexesoBoard;
 import org.tuke.core.PexesoCard;
+import org.tuke.entity.Comment;
+import org.tuke.entity.Rating;
 import org.tuke.entity.Score;
-import org.tuke.service.RatingsService;
-import org.tuke.service.RatingsServiceJDBC;
-import org.tuke.service.ScoreService;
-import org.tuke.service.ScoreServiceJDBC;
+import org.tuke.service.*;
 
 import java.util.Date;
 import java.util.Scanner;
@@ -17,6 +16,7 @@ import java.util.regex.Pattern;
 public class PexesoGameUI {
     public static final ScoreService scoreService= new ScoreServiceJDBC();
     public static final RatingsService ratingsService= new RatingsServiceJDBC();
+    public static final CommentsService commentsService=new CommentsServiceJDBC();
     private final PexesoBoard pexesoBoard;
     Scanner scanner = new Scanner(System.in);
     private int tries;
@@ -35,8 +35,14 @@ public class PexesoGameUI {
 
         System.out.println("You have won ... GG !!!");
         System.out.println("Number of tries ... " + tries);
+
         saveScore();
+
+        askForRating();
+        askForComment();
+
         printRatings();
+        printComments();
 
     }
 
@@ -52,7 +58,7 @@ public class PexesoGameUI {
 
         int[] positions = null;
 
-        positions = getPositions();
+        positions = getInput();
 
         int row1 = positions[0];int col1 = positions[1];
         PexesoCard firstCard = pexesoBoard.getCard(row1, col1);
@@ -60,7 +66,7 @@ public class PexesoGameUI {
 
         displayBoard();
 
-        positions=getPositions();
+        positions= getInput();
 
         int row2 = positions[0];int col2 = positions[1];
         PexesoCard secondCard = pexesoBoard.getCard(row2, col2);
@@ -74,7 +80,7 @@ public class PexesoGameUI {
         System.out.println("Tries: " + tries);
     }
 
-    private int[] getPositions() {
+    private int[] getInput() {
         int[] positions;
         while (true) {
             System.out.print("Enter two card positions (e.g. 0 1 2 3): ");
@@ -192,4 +198,45 @@ public class PexesoGameUI {
             System.out.printf("%d. %s %d\n",(i+1),score.getPlayer(),score.getRating());
         }
     }
+
+    private void printComments(){
+        System.out.println("                      Past Comments                        ");
+        System.out.println("----------------------------------------------------------");
+        var comments=commentsService.getComments("pexeso");
+        for (int i=0;i<comments.size();i++){
+            var comment=comments.get(i);
+            System.out.printf("%s %s\n",comment.getPlayer(),comment.getComment());
+        }
+    }
+
+    private void askForRating(){
+        System.out.println("Rate the game from 0-5 stars(write a number from 0 - 5)");
+        int input=scanner.nextInt();
+        if(!(input>=0 && input<=5)) {
+            boolean validInput = false;
+            while (!validInput) {
+                System.out.println("U can only rate game between 0 - 5");
+                input=scanner.nextInt();
+                if ((input >= 0 && input <= 5)) {
+                    validInput=true;
+                }
+            }
+        }
+        ratingsService.addRating(new Rating(System.getProperty("user.name"),"pexeso",input));
+    }
+
+    private void askForComment(){
+        System.out.println("Would you like to leave a comment? (yes/no)");
+        String answer = scanner.nextLine();
+        while(!answer.equals("yes") && !answer.equals("no")) {
+            System.out.println("Please enter a valid answer (yes/no):");
+            answer = scanner.nextLine();
+        }
+        if (answer.equals("yes")) {
+            System.out.println("Enter a comment:");
+            String comment = scanner.nextLine();
+            commentsService.addComment(new Comment(System.getProperty("user.name"), "pexeso", comment));
+        }
+    }
+
 }
