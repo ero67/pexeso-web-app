@@ -1,13 +1,13 @@
-package org.tuke.consoleui;
+package sk.tuke.gamestudio.game.pexeso.consoleui;
 
-import org.tuke.core.BoardState;
-import org.tuke.core.CardState;
-import org.tuke.core.PexesoBoard;
-import org.tuke.core.PexesoCard;
-import org.tuke.entity.Comment;
-import org.tuke.entity.Rating;
-import org.tuke.entity.Score;
-import org.tuke.service.*;
+import sk.tuke.gamestudio.game.pexeso.core.BoardState;
+import sk.tuke.gamestudio.game.pexeso.core.CardState;
+import sk.tuke.gamestudio.game.pexeso.core.PexesoBoard;
+import sk.tuke.gamestudio.game.pexeso.core.PexesoCard;
+import sk.tuke.gamestudio.entity.Comment;
+import sk.tuke.gamestudio.entity.Rating;
+import sk.tuke.gamestudio.entity.Score;
+import sk.tuke.gamestudio.service.*;
 
 import java.util.Date;
 import java.util.Scanner;
@@ -51,7 +51,7 @@ public class PexesoGameUI {
 
 
     public void playTurn() {
-        cheatDisplayBoard();
+       //cheatDisplayBoard();
         System.out.println("\n");
         displayBoard();
 

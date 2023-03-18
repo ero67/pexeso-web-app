@@ -1,14 +1,14 @@
-package org.tuke.entity;
+package sk.tuke.gamestudio.entity;
 
-public class Comment {
+public class Rating {
     private String player;
     private String game;
-    private String comment;
+    private int rating;
 
-    public Comment(String player, String game, String comment) {
+    public Rating(String player, String game, int rating) {
         this.player = player;
         this.game = game;
-        this.comment = comment;
+        this.rating = rating;
     }
 
     public String getPlayer() {
@@ -27,11 +27,11 @@ public class Comment {
         this.game = game;
     }
 
-    public String getComment() {
-        return comment;
+    public int getRating() {
+        return rating;
     }
 
-    public void setComment(String comment) {
-        this.comment = comment;
+    public void setRating(int points) {
+        this.rating = points;
     }
 }

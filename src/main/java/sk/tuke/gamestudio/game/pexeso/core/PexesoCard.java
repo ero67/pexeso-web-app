@@ -1,4 +1,4 @@
-package org.tuke.core;
+package sk.tuke.gamestudio.game.pexeso.core;
 
 public class PexesoCard {
     private CardState state= CardState.HIDDEN;

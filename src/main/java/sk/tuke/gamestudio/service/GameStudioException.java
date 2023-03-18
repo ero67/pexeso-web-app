@@ -1,4 +1,4 @@
-package org.tuke.service;
+package sk.tuke.gamestudio.service;
 
 public class GameStudioException extends RuntimeException{
 

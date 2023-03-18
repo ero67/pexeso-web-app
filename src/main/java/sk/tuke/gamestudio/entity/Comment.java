@@ -1,16 +1,14 @@
-package org.tuke.entity;
+package sk.tuke.gamestudio.entity;
 
-import java.util.Date;
-
-public class Rating {
+public class Comment {
     private String player;
     private String game;
-    private int rating;
+    private String comment;
 
-    public Rating(String player, String game, int rating) {
+    public Comment(String player, String game, String comment) {
         this.player = player;
         this.game = game;
-        this.rating = rating;
+        this.comment = comment;
     }
 
     public String getPlayer() {
@@ -29,11 +27,11 @@ public class Rating {
         this.game = game;
     }
 
-    public int getRating() {
-        return rating;
+    public String getComment() {
+        return comment;
     }
 
-    public void setRating(int points) {
-        this.rating = points;
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 }

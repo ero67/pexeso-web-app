@@ -1,11 +1,11 @@
 package tuke.game.pexeso.core;
 
 import org.junit.jupiter.api.Test;
-import org.tuke.consoleui.PexesoGameUI;
-import org.tuke.core.BoardState;
-import org.tuke.core.CardState;
-import org.tuke.core.PexesoBoard;
-import org.tuke.core.PexesoCard;
+import sk.tuke.gamestudio.game.pexeso.consoleui.PexesoGameUI;
+import sk.tuke.gamestudio.game.pexeso.core.BoardState;
+import sk.tuke.gamestudio.game.pexeso.core.CardState;
+import sk.tuke.gamestudio.game.pexeso.core.PexesoBoard;
+import sk.tuke.gamestudio.game.pexeso.core.PexesoCard;
 
 import java.io.ByteArrayInputStream;
 import java.util.Scanner;
@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class PexesoGameUITest {
 
-    @org.junit.jupiter.api.Test
+    @Test
     public void testGameEndsWhenAllPairsFound() {
         // create a new Pexeso game
        PexesoBoard pexesoBoard=new PexesoBoard(2);
@@ -32,7 +32,7 @@ class PexesoGameUITest {
         // ensure that the game state is now FINISHED
         assertEquals(BoardState.SOLVED, pexesoBoard.getBoardState());
     }
-    @org.junit.jupiter.api.Test
+    @Test
     public void testFlipCardFuntion(){
         PexesoBoard pexesoBoard = new PexesoBoard(2);
         PexesoCard card=pexesoBoard.getCard(0,0);
@@ -41,7 +41,7 @@ class PexesoGameUITest {
         assertEquals(card.getState(),CardState.FACE_UP);
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     public void testCompareCards(){
         PexesoBoard pexesoBoard=new PexesoBoard(2);
 
@@ -54,7 +54,7 @@ class PexesoGameUITest {
 
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     public void testCompareCardsWrong(){
         PexesoBoard pexesoBoard=new PexesoBoard(2);
 

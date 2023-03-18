@@ -1,4 +1,4 @@
-package org.tuke.core;
+package sk.tuke.gamestudio.game.pexeso.core;
 
 import java.util.ArrayList;
 import java.util.Collections;

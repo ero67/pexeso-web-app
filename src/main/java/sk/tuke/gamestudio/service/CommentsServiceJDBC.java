@@ -1,7 +1,6 @@
-package org.tuke.service;
+package sk.tuke.gamestudio.service;
 
-import org.tuke.entity.Comment;
-import org.tuke.entity.Rating;
+import sk.tuke.gamestudio.entity.Comment;
 
 import java.sql.DriverManager;
 import java.sql.SQLException;

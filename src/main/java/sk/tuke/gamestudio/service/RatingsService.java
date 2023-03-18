@@ -1,9 +1,7 @@
-package org.tuke.service;
+package sk.tuke.gamestudio.service;
 
-import org.tuke.entity.Rating;
-import org.tuke.entity.Score;
+import sk.tuke.gamestudio.entity.Rating;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public interface RatingsService {
