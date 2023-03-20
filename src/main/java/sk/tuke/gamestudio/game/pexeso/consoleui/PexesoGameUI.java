@@ -220,6 +220,7 @@ public class PexesoGameUI {
     }
 
     private void askForRating() {
+        System.out.println("\n");
         System.out.println("Rate the game from 0-5 stars(write a number from 0 - 5)");
         int input = scanner.nextInt();
         if (!(input >= 0 && input <= 5)) {

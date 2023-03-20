@@ -102,5 +102,20 @@ class PexesoGameUITest {
         assertNull(result);
     }
 
+    @Test
+    public void testProcessInputInvalid2() {
+        // set up input
+        ByteArrayInputStream inputStream = new ByteArrayInputStream("0 8".getBytes());
+        System.setIn(inputStream);
+        Scanner scanner = new Scanner(System.in);
+        PexesoBoard pexesoBoard = new PexesoBoard(2);
+        PexesoGameUI pexesoGame = new PexesoGameUI(pexesoBoard);
+        // execute
+        int[] result = pexesoGame.processInput(scanner);
+
+        // check
+        assertNull(result);
+    }
+
 
 }
