@@ -1,5 +1,6 @@
 package sk.tuke.gamestudio.game.pexeso.consoleui;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import sk.tuke.gamestudio.game.pexeso.core.BoardState;
 import sk.tuke.gamestudio.game.pexeso.core.CardState;
 import sk.tuke.gamestudio.game.pexeso.core.PexesoBoard;
@@ -14,9 +15,12 @@ import java.util.Scanner;
 import java.util.regex.Pattern;
 
 public class PexesoGameUI {
-    public static final ScoreService scoreService = new ScoreServiceJDBC();
-    public static final RatingsService ratingsService = new RatingsServiceJDBC();
-    public static final CommentsService commentsService = new CommentsServiceJDBC();
+    @Autowired
+    private ScoreService scoreService;
+    @Autowired
+    private RatingsService ratingsService;
+    @Autowired
+    private CommentsService commentsService;
     private final PexesoBoard pexesoBoard;
     Scanner scanner = new Scanner(System.in);
     private int tries;
@@ -26,7 +30,6 @@ public class PexesoGameUI {
     }
 
     public void play() {
-
         while (pexesoBoard.getBoardState() == BoardState.PLAYING) {
             tries++;
             playTurn();
@@ -42,17 +45,16 @@ public class PexesoGameUI {
         askForRating();
         askForComment();
         printTopScores();
-        printRatings();
+     //   printRatings();
+        printAverageRating();
         printComments();
     }
 
-    private void saveScore() {
-        scoreService.addScore(new Score(System.getProperty("user.name"), "pexeso", tries, new Date()));
-    }
+
 
 
     public void playTurn() {
-        cheatDisplayBoard();
+        //cheatDisplayBoard();
         System.out.println("\n");
         displayBoard();
 
@@ -64,6 +66,16 @@ public class PexesoGameUI {
         int col1 = positions[1];
         PexesoCard firstCard = pexesoBoard.getCard(row1, col1);
         boolean flip1 = pexesoBoard.flip(firstCard);
+        if(flip1==false){
+            if(firstCard.getState() == CardState.MATCHED){
+                System.out.println("Card is already MATCHED !!!");
+            }
+            else if (firstCard.getState()==CardState.FACE_UP){
+                System.out.println("Card is already flipped");
+            }
+        }
+
+
 
         displayBoard();
 
@@ -74,11 +86,24 @@ public class PexesoGameUI {
         PexesoCard secondCard = pexesoBoard.getCard(row2, col2);
         boolean flip2 = pexesoBoard.flip(secondCard);
 
+        if(flip2==false){
+            if(secondCard.getState() == CardState.MATCHED){
+                System.out.println("Card is already MATCHED !!!");
+            }
+            else if (secondCard.getState()==CardState.FACE_UP){
+                System.out.println("Card is already flipped");
+            }
+        }
+
         displayBoard();
 
         if (flip1 && flip2) {
-            pexesoBoard.compareCards(firstCard, secondCard);
+             boolean compared=pexesoBoard.compareCards(firstCard, secondCard);
+            if(!compared){
+                System.out.println("Cards do not match...keep trying!!!");
+            }
         }
+
         System.out.println("Tries: " + tries);
     }
 
@@ -186,6 +211,10 @@ public class PexesoGameUI {
         }
     }
 
+    private void saveScore() {
+        scoreService.addScore(new Score(System.getProperty("user.name"), "pexeso", tries, new Date()));
+    }
+
     private void printTopScores() {
         System.out.println("                      Top Scores                        ");
         System.out.println("-------------------------------------------------------");
@@ -206,6 +235,10 @@ public class PexesoGameUI {
             System.out.printf("%d. %s %d\n", (i + 1), score.getPlayer(), score.getRating());
         }
         System.out.println("------------------------------------------------------------");
+    }
+
+    private void printAverageRating(){
+        System.out.println("Average RATING : " + ratingsService.getAverageRating("pexeso"));
     }
 
     private void printComments() {
@@ -233,7 +266,7 @@ public class PexesoGameUI {
                 }
             }
         }
-        ratingsService.addRating(new Rating(System.getProperty("user.name"), "pexeso", input));
+        ratingsService.setRating(new Rating(System.getProperty("user.name"), "pexeso", input,new Date()));
     }
 
     private void askForComment() {
@@ -246,7 +279,7 @@ public class PexesoGameUI {
         if (answer.equals("yes")) {
             System.out.println("Enter a comment:");
             String comment = scanner.nextLine();
-            commentsService.addComment(new Comment(System.getProperty("user.name"), "pexeso", comment));
+            commentsService.addComment(new Comment(System.getProperty("user.name"), "pexeso", comment, new Date()));
         }
     }
 

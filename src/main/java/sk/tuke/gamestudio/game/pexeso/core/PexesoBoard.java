@@ -116,7 +116,7 @@ public class PexesoBoard {
             secondCard.setState(CardState.MATCHED);
             return true;
         } else {
-            System.out.println("Cards do not match...keep trying!!!");
+            //System.out.println("Cards do not match...keep trying!!!");
             firstCard.setState(CardState.HIDDEN);
             secondCard.setState(CardState.HIDDEN);
             return false;

@@ -1,16 +1,16 @@
 package tuke.game.pexeso.service;
 import org.junit.jupiter.api.Test;
 import sk.tuke.gamestudio.entity.Rating;
-import sk.tuke.gamestudio.entity.Score;
+import sk.tuke.gamestudio.service.RatingServiceJPA;
 import sk.tuke.gamestudio.service.RatingsService;
-import sk.tuke.gamestudio.service.RatingsServiceJDBC;
+
 
 import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class RatingsServiceTest {
-    RatingsService ratingsService=new RatingsServiceJDBC();
+    RatingsService ratingsService=new RatingServiceJPA();
 
     @Test
     public void reset() {
@@ -24,7 +24,7 @@ public class RatingsServiceTest {
         ratingsService.reset();
         var date = new Date();
 
-        ratingsService.addRating(new Rating("Erik", "pexeso", 5));
+        ratingsService.setRating(new Rating("Erik", "pexeso", 5,date));
 
         var ratings = ratingsService.getTopRatings("pexeso");
         assertEquals(1, ratings.size());
@@ -38,9 +38,9 @@ public class RatingsServiceTest {
     public void getTopRatings() {
         ratingsService.reset();
         var date = new Date();
-        ratingsService.addRating(new Rating("Jaro", "pexeso", 5));
-        ratingsService.addRating(new Rating("Peter", "pexeso", 4));
-        ratingsService.addRating(new Rating("Samo", "pexeso", 3));
+        ratingsService.setRating(new Rating("Jaro", "pexeso", 5,date));
+        ratingsService.setRating(new Rating("Peter", "pexeso", 4,date));
+        ratingsService.setRating(new Rating("Samo", "pexeso", 3,date));
 
         var ratings = ratingsService.getTopRatings("pexeso");
 

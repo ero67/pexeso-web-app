@@ -16,11 +16,11 @@ public class JDBCTEST {
         var scores=service.getTopScores("pexeso");
         System.out.println(scores);
 
-        RatingsService service1=new RatingsServiceJDBC();
-        service1.reset();
+       // RatingsService service1=new RatingsServiceJDBC();
+        //service1.reset();
 
 
-        var sratings=service1.getTopRatings("pexeso");
+        //var sratings=service1.getTopRatings("pexeso");
         System.out.println(scores);
 
 
