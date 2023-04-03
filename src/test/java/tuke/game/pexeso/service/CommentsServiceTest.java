@@ -1,18 +1,31 @@
 package tuke.game.pexeso.service;
 
 import org.junit.jupiter.api.Test;
-import sk.tuke.gamestudio.entity.Comment;
-import sk.tuke.gamestudio.service.CommentsService;
-import sk.tuke.gamestudio.service.CommentsServiceJDBC;
-import sk.tuke.gamestudio.service.CommentsServiceJPA;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+//package tuke.game.pexeso.service;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.Date;
 
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
-
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.context.junit4.SpringRunner;
+import sk.tuke.gamestudio.SpringClient;
+import sk.tuke.gamestudio.entity.Comment;
+import sk.tuke.gamestudio.service.CommentsService;
+//@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
+@SpringBootTest(classes = SpringClient.class)
 public class CommentsServiceTest {
-    private CommentsService commentsService=new CommentsServiceJPA();
+
+    @Autowired
+    private CommentsService commentsService;
 
     @Test
     public void reset() {
@@ -45,6 +58,4 @@ public class CommentsServiceTest {
         assertEquals(3,comments.size());
 
     }
-
-
 }

@@ -1,4 +1,4 @@
-package sk.tuke.gamestudio.service;
+/*package sk.tuke.gamestudio.service;
 
 import sk.tuke.gamestudio.entity.Rating;
 
@@ -99,3 +99,4 @@ public class RatingsServiceJDBC implements RatingsService {
     }
 
 }
+*/

@@ -1,14 +1,13 @@
 package sk.tuke.gamestudio.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
 @Entity
 public class Rating {
     @Id
     @GeneratedValue
     private int ident;
+
     private String player;
     private String game;
     private int rating;

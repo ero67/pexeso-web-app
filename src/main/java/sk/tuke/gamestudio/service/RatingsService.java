@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface RatingsService {
     void setRating(Rating rating);
-    List<Rating> getTopRatings(String game);
+    int getRating(String game, String player);
     void reset();
     int getAverageRating(String game) throws GameStudioException;
 }

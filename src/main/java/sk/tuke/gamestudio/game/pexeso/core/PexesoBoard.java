@@ -33,9 +33,9 @@ public class PexesoBoard {
         // Create the board
         pexesoCardList = new PexesoCard[boardSize][boardSize];
         int index = 0;
-        for (int i = 0; i < boardSize; i++) {
-            for (int j = 0; j < boardSize; j++) {
-                pexesoCardList[i][j] = new PexesoCard(cardValues.get(index));
+        for (int row = 0; row < boardSize; row++) {
+            for (int col = 0; col < boardSize; col++) {
+                pexesoCardList[row][col] = new PexesoCard(cardValues.get(index));
                 index++;
                 if (index >= cardValues.size()) {
                     index = 0;
@@ -68,10 +68,9 @@ public class PexesoBoard {
 
     public boolean flip(PexesoCard firstCard) {
         if (firstCard.getState() == CardState.MATCHED) {
-            System.out.println("Card is already MATCHED !!!");
             return false;
+
         }else if(firstCard.getState()==CardState.FACE_UP){
-            System.out.println("Card is already flipped");
             return false;
         }
         else {
@@ -92,9 +91,9 @@ public class PexesoBoard {
         int size = this.getSize() ;
         //System.out.println(size);
         int matchedPairs = 0;
-        for (int i = 0; i < size; i++) {
-            for (int j = 0; j < size; j++) {
-                PexesoCard card = this.getCard(i, j);
+        for (int row = 0; row < size; row++) {
+            for (int col = 0; col < size; col++) {
+                PexesoCard card = this.getCard(row, col);
                 if (card.getState() == CardState.MATCHED) {
                     matchedPairs++;
                 } else if (card.getState() == CardState.HIDDEN) {

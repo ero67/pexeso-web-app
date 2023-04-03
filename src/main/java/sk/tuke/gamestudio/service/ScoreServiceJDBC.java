@@ -1,4 +1,4 @@
-package sk.tuke.gamestudio.service;
+/*package sk.tuke.gamestudio.service;
 
 import sk.tuke.gamestudio.entity.Score;
 
@@ -68,3 +68,4 @@ public class ScoreServiceJDBC implements ScoreService{
 
     }
 }
+*/

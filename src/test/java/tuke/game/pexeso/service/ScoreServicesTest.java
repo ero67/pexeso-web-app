@@ -1,25 +1,27 @@
 package tuke.game.pexeso.service;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import sk.tuke.gamestudio.entity.Comment;
-import sk.tuke.gamestudio.entity.Score;
-import sk.tuke.gamestudio.service.CommentsServiceJDBC;
-import sk.tuke.gamestudio.service.ScoreService;
-import sk.tuke.gamestudio.service.ScoreServiceJDBC;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.util.Date;
 
-import static org.junit.jupiter.api.Assertions.*;
-
+import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
+import sk.tuke.gamestudio.SpringClient;
+import sk.tuke.gamestudio.entity.Score;
+import sk.tuke.gamestudio.service.ScoreService;
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = SpringClient.class)
 public class ScoreServicesTest {
+
+    @Autowired
     private ScoreService scoreService;
 
-    public ScoreServicesTest() {
-        scoreService = new ScoreServiceJDBC();
-    }
     @Test
     public void reset() {
         scoreService.reset();
-
         assertEquals(0, scoreService.getTopScores("pexeso").size());
     }
 
@@ -52,24 +54,18 @@ public class ScoreServicesTest {
         assertEquals(3, scores.size());
 
         assertEquals("pexeso", scores.get(0).getGame());
-        assertEquals("Katka", scores.get(0).getPlayer());
-        assertEquals(2, scores.get(0).getPoints());
+        assertEquals("Erik", scores.get(0).getPlayer());
+        assertEquals(100, scores.get(0).getPoints());
         assertEquals(date, scores.get(0).getPlayedAt());
 
         assertEquals("pexeso", scores.get(1).getGame());
-        assertEquals("Jaro", scores.get(1).getPlayer());
-        assertEquals(4, scores.get(1).getPoints());
+        assertEquals("Peter", scores.get(1).getPlayer());
+        assertEquals(6, scores.get(1).getPoints());
         assertEquals(date, scores.get(1).getPlayedAt());
 
         assertEquals("pexeso", scores.get(2).getGame());
-        assertEquals("Peter", scores.get(2).getPlayer());
-        assertEquals(6, scores.get(2).getPoints());
+        assertEquals("Jaro", scores.get(2).getPlayer());
+        assertEquals(4, scores.get(2).getPoints());
         assertEquals(date, scores.get(2).getPlayedAt());
     }
-
-
-
-
-
 }
-

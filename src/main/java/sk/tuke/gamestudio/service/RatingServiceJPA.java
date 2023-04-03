@@ -2,10 +2,7 @@ package sk.tuke.gamestudio.service;
 
 import sk.tuke.gamestudio.entity.Rating;
 
-import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
-import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
+import javax.persistence.*;
 import javax.transaction.Transactional;
 import java.util.List;
 @Transactional
@@ -21,19 +18,24 @@ public class RatingServiceJPA implements RatingsService {
                     .setParameter("game", rating.getGame())
                     .getSingleResult();
             existingRating.setRating(rating.getRating());
-            existingRating.setRatedAt(rating.getRatedAtdAt());
-            entityManager.merge(existingRating);
+            existingRating.setRatedAt(rating.getRatedAtdAt());//ak najdem daneho hraca s danou hrou tak mu zmenim skore....
         } catch (NoResultException e) {
-            entityManager.persist(rating);
+            entityManager.persist(rating);//ak nie
         }
     }
 
     @Override
-    public List<Rating> getTopRatings(String game) {
-        return entityManager.createQuery("select s from Rating s where s.game = :game order by s.rating desc")
-                .setParameter("game", game)
-                .setMaxResults(10)
-                .getResultList();
+    public int getRating(String game, String player) {
+        Query query = entityManager.createQuery("SELECT r FROM Rating r WHERE r.game = :game AND r.player = :player");
+        query.setParameter("game", game);
+        query.setParameter("player", player);
+
+        Rating rating= (Rating) query.getSingleResult();
+        if (rating==null) {
+            return 0;
+        }
+
+        return rating.getRating();
     }
 
     @Override

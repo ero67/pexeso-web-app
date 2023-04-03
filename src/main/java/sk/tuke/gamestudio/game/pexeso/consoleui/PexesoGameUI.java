@@ -10,11 +10,18 @@ import sk.tuke.gamestudio.entity.Rating;
 import sk.tuke.gamestudio.entity.Score;
 import sk.tuke.gamestudio.service.*;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import java.util.Date;
+import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
 public class PexesoGameUI {
+    @PersistenceContext
+    private EntityManager entityManager;
     @Autowired
     private ScoreService scoreService;
     @Autowired
@@ -45,11 +52,10 @@ public class PexesoGameUI {
         askForRating();
         askForComment();
         printTopScores();
-     //   printRatings();
+        printRatings("pexeso");
         printAverageRating();
         printComments();
     }
-
 
 
 
@@ -65,17 +71,8 @@ public class PexesoGameUI {
         int row1 = positions[0];
         int col1 = positions[1];
         PexesoCard firstCard = pexesoBoard.getCard(row1, col1);
+
         boolean flip1 = pexesoBoard.flip(firstCard);
-        if(flip1==false){
-            if(firstCard.getState() == CardState.MATCHED){
-                System.out.println("Card is already MATCHED !!!");
-            }
-            else if (firstCard.getState()==CardState.FACE_UP){
-                System.out.println("Card is already flipped");
-            }
-        }
-
-
 
         displayBoard();
 
@@ -103,19 +100,17 @@ public class PexesoGameUI {
                 System.out.println("Cards do not match...keep trying!!!");
             }
         }
-
         System.out.println("Tries: " + tries);
     }
 
+
+
     public int[] getInput() {
-        int[] positions;
-        while (true) {
+        int[] positions = null;
+        do {
             System.out.print("Enter two card positions (e.g. 0 1 2 3): ");
             positions = processInput(scanner);
-            if (positions != null) {
-                break;
-            }
-        }
+        } while (positions == null);
         return positions;
     }
 
@@ -200,6 +195,7 @@ public class PexesoGameUI {
             }
             PexesoCard testsecondCard = pexesoBoard.getCard(Integer.parseInt(values[0]), Integer.parseInt(values[1]));
             if (!pexesoBoard.flip(testsecondCard)) {
+                System.out.println("Card is already flipped or matched !!!");
                 return null;
             }
             pexesoBoard.flipBack(testsecondCard);
@@ -226,15 +222,24 @@ public class PexesoGameUI {
         System.out.println("-------------------------------------------------------");
     }
 
-    private void printRatings() {
-        System.out.println("                      Past Ratings                        ");
-        System.out.println("----------------------------------------------------------");
-        var ratings = ratingsService.getTopRatings("pexeso");
-        for (int i = 0; i < ratings.size(); i++) {
-            var score = ratings.get(i);
-            System.out.printf("%d. %s %d\n", (i + 1), score.getPlayer(), score.getRating());
+
+
+    public void printRatings(String game) {
+        Query query = entityManager.createQuery("SELECT r FROM Rating r WHERE r.game = :game");
+        query.setParameter("game", game);
+
+        List<?> results = query.getResultList();
+        if (results.isEmpty()) {
+            System.out.printf("No ratings found for game '%s'.%n", game);
+            return;
         }
-        System.out.println("------------------------------------------------------------");
+
+        System.out.printf("                      RATINGS for '%s'\n", game);
+        System.out.println("---------------------------------------------------------------");
+        for (Object result : results) {
+            Rating rating = (Rating) result;
+            System.out.printf("%s - %s: %d%n", rating.getGame(), rating.getPlayer(), rating.getRating());
+        }
     }
 
     private void printAverageRating(){
