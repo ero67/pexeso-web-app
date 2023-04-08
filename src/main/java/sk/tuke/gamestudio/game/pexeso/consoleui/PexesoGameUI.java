@@ -272,6 +272,7 @@ public class PexesoGameUI {
             }
         }
         ratingsService.setRating(new Rating(System.getProperty("user.name"), "pexeso", input,new Date()));
+
     }
 
     private void askForComment() {

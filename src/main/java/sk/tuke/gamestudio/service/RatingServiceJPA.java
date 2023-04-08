@@ -20,7 +20,7 @@ public class RatingServiceJPA implements RatingsService {
             existingRating.setRating(rating.getRating());
             existingRating.setRatedAt(rating.getRatedAtdAt());//ak najdem daneho hraca s danou hrou tak mu zmenim skore....
         } catch (NoResultException e) {
-            entityManager.persist(rating);//ak nie
+            entityManager.persist(rating);//ak nie tak pridam novy rating
         }
     }
 
@@ -52,6 +52,7 @@ public class RatingServiceJPA implements RatingsService {
         query.setParameter("game", game);
         Double result = query.getSingleResult();
         return result != null ? result.intValue() : 0;
+
     }
 }
 

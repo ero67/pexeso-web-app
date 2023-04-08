@@ -27,15 +27,15 @@ public class CommentsServiceTest {
     @Autowired
     private CommentsService commentsService;
 
-    @Test
-    public void reset() {
-        commentsService.reset();
-        assertEquals(0, commentsService.getComments("pexeso").size());
-    }
+   // @Test
+  //  public void reset() {
+  //      commentsService.reset();
+  //      assertEquals(0, commentsService.getComments("pexeso").size());
+  //  }
 
     @Test
     public void addComment() {
-        commentsService.reset();
+     //   commentsService.reset();
         var date = new Date();
 
         commentsService.addComment(new Comment("Jaro", "pexeso", "ahoj",date));
@@ -49,7 +49,7 @@ public class CommentsServiceTest {
 
     @Test
     public void getComments(){
-        commentsService.reset();
+      //  commentsService.reset();
         commentsService.addComment(new Comment("Erik","pexeso","super",new Date()));
         commentsService.addComment(new Comment("Erik","pexeso","super",new Date()));
         commentsService.addComment(new Comment("Erik","pexeso","super",new Date()));

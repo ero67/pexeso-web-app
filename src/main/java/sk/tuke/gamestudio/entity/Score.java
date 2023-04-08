@@ -1,10 +1,13 @@
 package sk.tuke.gamestudio.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
-
+@Table(
+      name="score",
+      uniqueConstraints = {
+              @UniqueConstraint(columnNames = {"game","player"})
+      }
+        )
 @Entity
 public class Score {
 
@@ -12,9 +15,13 @@ public class Score {
     @GeneratedValue
     private int ident;
 
+    @Column
     private String game;
+    @Column
     private int points;
+    @Column
     private Date playedAt;
+    @Column
     private String player;
 
 

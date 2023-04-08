@@ -1,17 +1,25 @@
 package sk.tuke.gamestudio.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
+@Table(
+       name = "comment",
+        uniqueConstraints = {
+                @UniqueConstraint(columnNames = {"game","player"})
+       }
+)
 @Entity
 public class Comment {
     @Id
     @GeneratedValue
     private int ident;
+    @Column
     private String player;
+    @Column
     private String game;
+    @Column
     private String comment;
+    @Column
     private Date commented_at;
 
     public Comment(){
