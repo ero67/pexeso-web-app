@@ -24,7 +24,7 @@ public class SpringClient {
         //SpringApplication.run(SpringClient.class).;
         new SpringApplicationBuilder(SpringClient.class).web(WebApplicationType.NONE).run(args);
     }
-   // @Bean
+    @Bean
     public CommandLineRunner runner(PexesoGameUI console){
         return s -> console.play();
     }
