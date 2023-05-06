@@ -1,5 +1,8 @@
 package sk.tuke.gamestudio.server.webservice;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 import sk.tuke.gamestudio.entity.Comment;
 import sk.tuke.gamestudio.entity.Score;
@@ -21,9 +24,14 @@ public class CommentServiceRest {
         return commentsService.getComments(game);
     }
 
-    //POST -> http://localhost:8080/api/score
+
     @PostMapping
-    public void addScore(@RequestBody Comment comment) {
+    public void addComment(@RequestBody Comment comment) {
         commentsService.addComment(comment);
     }
+
+
 }
+
+
+

@@ -18,13 +18,13 @@ public class RatingServiceJPA implements RatingsService {
                     .setParameter("game", rating.getGame())
                     .getSingleResult();
             existingRating.setRating(rating.getRating());
-            existingRating.setRatedAt(rating.getRatedAtdAt());//ak najdem daneho hraca s danou hrou tak mu zmenim skore....
+            existingRating.setRatedAt(rating.getRatedAt());//ak najdem daneho hraca s danou hrou tak mu zmenim skore....
         } catch (NoResultException e) {
             entityManager.persist(rating);//ak nie tak pridam novy rating
         }
     }
 
-    @Override
+    /*@Override
     public int getRating(String game, String player) {
         Query query = entityManager.createQuery("SELECT r FROM Rating r WHERE r.game = :game AND r.player = :player");
         query.setParameter("game", game);
@@ -36,6 +36,21 @@ public class RatingServiceJPA implements RatingsService {
         }
 
         return rating.getRating();
+    }
+*/
+
+    @Override
+    public int getRating(String game, String player) {
+        try {
+            Query query = entityManager.createQuery("SELECT r FROM Rating r WHERE r.game = :game AND r.player = :player");
+            query.setParameter("game", game);
+            query.setParameter("player", player);
+
+            Rating rating = (Rating) query.getSingleResult();
+            return rating.getRating();
+        } catch (NoResultException e) {
+            return 0;
+        }
     }
 
     @Override
@@ -51,8 +66,10 @@ public class RatingServiceJPA implements RatingsService {
                 "SELECT AVG(r.rating) FROM Rating r WHERE r.game = :game", Double.class);
         query.setParameter("game", game);
         Double result = query.getSingleResult();
+        //ak sa result nerovna null vratim int, ak sa rovna null tak vratim nulu
         return result != null ? result.intValue() : 0;
 
     }
 }
+
 

@@ -31,3 +31,4 @@ public class ScoreServiceRestClient implements ScoreService {
         throw new UnsupportedOperationException("Not supported via web service");
     }
 }
+

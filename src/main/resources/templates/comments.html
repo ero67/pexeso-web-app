@@ -1,0 +1,24 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/template.html}">
+<!--/*@thymesVar id="minesController" type="sk.tuke.gamestudio.server.controller.PexesoController"*/-->
+<head>
+    <meta charset="UTF-8">
+    <title>Gamestudio</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+    <!--<script th:src="@{/js/script.js}"></script>-->
+
+</head>
+
+<!--<body>-->
+<main layout:fragment="content">
+    <h1>Pexeso</h1>
+
+
+    <!-- Table with best scores -->
+    <!--/*@thymesVar id="comments" type="java.util.List<sk.tuke.gamestudio.entity.Comment>"*/-->
+    <div th:replace="fragments/fragments :: comments(${comments})"/>
+</main>
+</html>

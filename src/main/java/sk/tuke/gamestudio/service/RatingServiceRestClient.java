@@ -26,23 +26,23 @@ public class RatingServiceRestClient implements RatingsService {
     public void reset() {
         throw new UnsupportedOperationException("Not supported via web service");
     }
-   /*
-    @Override
-    public int getAverageRating(String game) throws GameStudioException {
-        Rating[] ratings = restTemplate.getForEntity(url + "/rating/" + game, Rating[].class).getBody();
+    /*
+     @Override
+     public int getAverageRating(String game) throws GameStudioException {
+         Rating[] ratings = restTemplate.getForEntity(url + "/rating/" + game, Rating[].class).getBody();
 
-        if (ratings == null || ratings.length == 0) {
-            throw new GameStudioException("No ratings found for the game " + game);
-        }
+         if (ratings == null || ratings.length == 0) {
+             throw new GameStudioException("No ratings found for the game " + game);
+         }
 
-        int totalRating = 0;
-        for (Rating rating : ratings) {
-            totalRating += restTemplate.getForEntity(url + "/rating/" + game + "/" + rating.getPlayer(), Rating.class).getBody().getRating();
-        }
+         int totalRating = 0;
+         for (Rating rating : ratings) {
+             totalRating += restTemplate.getForEntity(url + "/rating/" + game + "/" + rating.getPlayer(), Rating.class).getBody().getRating();
+         }
 
-        return totalRating / ratings.length;
-    }
-*/
+         return totalRating / ratings.length;
+     }
+ */
     public int getAverageRating(String game){
         return restTemplate.getForEntity(url+"/rating/"+game+"/avg",Integer.class).getBody();
     }

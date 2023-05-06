@@ -27,3 +27,5 @@ public class RatingServiceRest {
         return ratingsService.getAverageRating(game);
     }
 }
+
+

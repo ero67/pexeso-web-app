@@ -28,20 +28,30 @@ public class PexesoGameUI {
     private RatingsService ratingsService;
     @Autowired
     private CommentsService commentsService;
-    private final PexesoBoard pexesoBoard;
+    private  PexesoBoard pexesoBoard;
     Scanner scanner = new Scanner(System.in);
     private int tries;
+    private int level = 1;
 
     public PexesoGameUI(PexesoBoard pexesoBoard) {
         this.pexesoBoard = pexesoBoard;
     }
 
     public void play() {
-        while (pexesoBoard.getBoardState() == BoardState.PLAYING) {
-            tries++;
-            playTurn();
-            pexesoBoard.isFinished();
+        while(level!=2) {
+            System.out.println("\n");
+            System.out.println("LEVEL"+level+"!!!");
+            while (pexesoBoard.getBoardState() == BoardState.PLAYING) {
+                tries++;
+                playTurn();
+                pexesoBoard.isFinished();
+            }
+            int colcount=level+2;
+
+            this.pexesoBoard=new PexesoBoard(2,colcount);
+            level ++;
         }
+
 
         System.out.println("\n");
         System.out.println("You have won ... GG !!!");
@@ -95,7 +105,7 @@ public class PexesoGameUI {
         displayBoard();
 
         if (flip1 && flip2) {
-             boolean compared=pexesoBoard.compareCards(firstCard, secondCard);
+            boolean compared=pexesoBoard.compareCards(firstCard, secondCard);
             if(!compared){
                 System.out.println("Cards do not match...keep trying!!!");
             }
@@ -115,22 +125,54 @@ public class PexesoGameUI {
     }
 
 
+//    private void displayBoard() {
+//        int size = pexesoBoard.getSize();
+//        System.out.println("This is the size"+ size);
+//        System.out.print("   ");
+//        for (int i = 0; i < size; i++) {
+//            System.out.print(i + " ");
+//        }
+//        System.out.println();
+//        System.out.print("   ");
+//        for (int i = 0; i < size; i++) {
+//            System.out.print("_" + " ");
+//        }
+//        System.out.println();
+//
+//        for (int i = 0; i < size; i++) {
+//            System.out.print(i + "| ");
+//            for (int j = 0; j < size; j++) {
+//                PexesoCard card = pexesoBoard.getCard(i, j);
+//                if (card.getState() == CardState.FACE_UP || card.getState() == CardState.MATCHED) {
+//                    System.out.print(card.getValue() + " ");
+//                } else {
+//                    System.out.print("%" + " ");
+//                }
+//            }
+//            System.out.println();
+//        }
+//    }
+
     private void displayBoard() {
-        int size = pexesoBoard.getSize();
+        int numRow = pexesoBoard.pexesoCardList.length;
+        int numCol = pexesoBoard.pexesoCardList[0].length;
+
+        System.out.println("This is the size: " + numRow + "x" + numCol);
+
         System.out.print("   ");
-        for (int i = 0; i < size; i++) {
+        for (int i = 0; i < numCol; i++) {
             System.out.print(i + " ");
         }
         System.out.println();
         System.out.print("   ");
-        for (int i = 0; i < size; i++) {
+        for (int i = 0; i < numCol; i++) {
             System.out.print("_" + " ");
         }
         System.out.println();
 
-        for (int i = 0; i < size; i++) {
+        for (int i = 0; i < numRow; i++) {
             System.out.print(i + "| ");
-            for (int j = 0; j < size; j++) {
+            for (int j = 0; j < numCol; j++) {
                 PexesoCard card = pexesoBoard.getCard(i, j);
                 if (card.getState() == CardState.FACE_UP || card.getState() == CardState.MATCHED) {
                     System.out.print(card.getValue() + " ");
@@ -187,9 +229,17 @@ public class PexesoGameUI {
         try {
             for (int i = 0; i < 2; i++) {
                 int num = Integer.parseInt(values[i]);
-                if (num < 0 || num > this.pexesoBoard.getSize() - 1) {
-                    System.out.println("Error: Invalid input - Values must be between 0 and " + (this.pexesoBoard.getSize() - 1));
+                if(num>=this.pexesoBoard.pexesoCardList.length && i==0) {
+                    // if (num < 0 || num > this.pexesoBoard.getSize() - 1) {
+                    // System.out.println("Error: Invalid input - Values must be between 0 and " + (this.pexesoBoard.getSize() - 1));
+                    System.out.println("Error: Invalid input - First value must be between 0 and " + (this.pexesoBoard.pexesoCardList.length-1));
                     return null;
+                    // }
+                }
+                else if(num>=this.pexesoBoard.pexesoCardList[0].length && i==1) {
+                    System.out.println("Error: Invalid input - Second value must be between 0 and " + (this.pexesoBoard.pexesoCardList[0].length-1));
+                    return null;
+
                 }
                 numbers[i] = num;
             }
@@ -259,12 +309,12 @@ public class PexesoGameUI {
 
     private void askForRating() {
         System.out.println("\n");
-        System.out.println("Rate the game from 0-5 stars(write a number from 0 - 5)");
+        System.out.println("Rate the game from 0-5 stars(write a number from 1 - 5)");
         int input = scanner.nextInt();
         if (!(input >= 0 && input <= 5)) {
             boolean validInput = false;
             while (!validInput) {
-                System.out.println("U can only rate game between 0 - 5");
+                System.out.println("U can only rate game between 1 - 5");
                 input = scanner.nextInt();
                 if ((input >= 0 && input <= 5)) {
                     validInput = true;
@@ -290,3 +340,4 @@ public class PexesoGameUI {
     }
 
 }
+

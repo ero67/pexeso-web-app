@@ -8,12 +8,12 @@ import sk.tuke.gamestudio.entity.Score;
 
 import java.util.Arrays;
 import java.util.List;
-
+//sluzi na komunikaciu s REST API na serveri, ale je pouzita v klientovi
 public class CommentServiceRestClient implements CommentsService {
     //See value of remote.server.api property in application.properties file
     @Value("${remote.server.api}")
     private String url;
-
+//pomocou restTemplate posielam poziadavky na server v nizsie udanych metodach
     @Autowired
     private RestTemplate restTemplate;
 

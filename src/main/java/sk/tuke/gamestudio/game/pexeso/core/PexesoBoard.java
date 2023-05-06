@@ -10,12 +10,12 @@ public class PexesoBoard {
 
 
 
-    public PexesoBoard(int size) {
+    public PexesoBoard(int numRow, int numCol ) {
         // Calculate the size of the board (rounded down to the nearest even number)
-        int boardSize = size / 2 * 2;
+        int boardSize = numRow*numCol;
 
         // Calculate the number of cards needed (half the board size)
-        int cardsNeeded = boardSize * boardSize / 2;
+        int cardsNeeded = boardSize / 2;
 
         // Create an ArrayList to hold the values for the cards
         ArrayList<String> cardValues = new ArrayList<String>(cardsNeeded);
@@ -31,15 +31,30 @@ public class PexesoBoard {
         shuffle(cardValues);
 
         // Create the board
-        pexesoCardList = new PexesoCard[boardSize][boardSize];
+//        pexesoCardList = new PexesoCard[numRow][numCol];
+//        int index = 0;
+//        for (int row = 0; row < numRow; row++) {
+//            for (int col = 0; col < numCol; col++) {
+//                pexesoCardList[row][col] = new PexesoCard(cardValues.get(index));
+//                index++;
+//                if (index >= cardValues.size()) {
+//                    index = 0;
+//                }
+//            }
+//        }
+
+        pexesoCardList = new PexesoCard[numRow][numCol];
         int index = 0;
-        for (int row = 0; row < boardSize; row++) {
-            for (int col = 0; col < boardSize; col++) {
+        for (int row = 0; row < numRow; row++) {
+            for (int col = 0; col < numCol; col++) {
                 pexesoCardList[row][col] = new PexesoCard(cardValues.get(index));
                 index++;
                 if (index >= cardValues.size()) {
                     index = 0;
                 }
+              //  if (row >= pexesoCardList.length || col >= pexesoCardList[row].length) {
+                //    throw new IllegalArgumentException("Invalid row or column parameter for PexesoBoard");
+                //}
             }
         }
     }
@@ -52,8 +67,12 @@ public class PexesoBoard {
         return pexesoCardList[row][col];
     }
 
-    public int getSize() {
-        return pexesoCardList.length;
+//    public int getSize() {
+//        return pexesoCardList.length;
+//    }
+
+    public int getSize(){
+        return pexesoCardList.length * pexesoCardList[0].length;
     }
 
     public void setBoardState(BoardState state){
@@ -88,11 +107,13 @@ public class PexesoBoard {
     }
 
     public void isFinished() {
-        int size = this.getSize() ;
+        // int size = this.getSize() ;
+        int numRow = pexesoCardList.length;
+        int numCol = pexesoCardList[0].length;
         //System.out.println(size);
         int matchedPairs = 0;
-        for (int row = 0; row < size; row++) {
-            for (int col = 0; col < size; col++) {
+        for (int row = 0; row < numRow; row++) {
+            for (int col = 0; col < numCol; col++) {
                 PexesoCard card = this.getCard(row, col);
                 if (card.getState() == CardState.MATCHED) {
                     matchedPairs++;
@@ -102,7 +123,7 @@ public class PexesoBoard {
                 }
             }
         }
-        if (matchedPairs == size * size) {
+        if (matchedPairs == numRow * numCol) {
             this.setBoardState(BoardState.SOLVED);
         }
     }

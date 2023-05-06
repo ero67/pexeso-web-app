@@ -19,11 +19,12 @@ import sk.tuke.gamestudio.service.*;
 @ComponentScan(excludeFilters = @ComponentScan.Filter(type = FilterType.REGEX,
         pattern = "sk.tuke.gamestudio.server.*"))
 
-public class SpringClient {
+public class  SpringClient {
     public static void main(String[] args) {
         //SpringApplication.run(SpringClient.class).;
         new SpringApplicationBuilder(SpringClient.class).web(WebApplicationType.NONE).run(args);
     }
+
     @Bean
     public CommandLineRunner runner(PexesoGameUI console){
         return s -> console.play();
@@ -31,17 +32,18 @@ public class SpringClient {
 
     @Bean
     public PexesoGameUI console(){
-        return new PexesoGameUI(new PexesoBoard(2));
+        return new PexesoGameUI(new PexesoBoard(2,2));
     }
 
-   /* @Bean
-    public ScoreService scoreService(){
-        return new ScoreServiceJPA();
-    }*/
+    /* @Bean
+     public ScoreService scoreService(){
+         return new ScoreServiceJPA();
+     }*/
+    //vytvori instantciu sluzby...pomomocou autowired je injektovana do PexesoGameUI napr
     @Bean
     public ScoreService scoreService() {
-       return new ScoreServiceRestClient();
-   }
+        return new ScoreServiceRestClient();
+    }
 
     @Bean
     public CommentsService commentsService(){
@@ -59,3 +61,4 @@ public class SpringClient {
     }
 
 }
+

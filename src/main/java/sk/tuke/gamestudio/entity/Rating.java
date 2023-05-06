@@ -58,7 +58,7 @@ public class Rating {
     public void setRating(int points) {
         this.rating = points;
     }
-    public Date getRatedAtdAt() {
+    public Date getRatedAt() {
         return ratedAt;
     }
     public void setRatedAt(Date ratedAt) {

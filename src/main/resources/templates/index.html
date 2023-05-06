@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/template.html}">
+
+<head>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+
+<main layout:fragment="content">
+    <div class="favorite-games">
+        <h3>Our Favorite Games</h3>
+        <ol>
+            <li><a href="/pexeso/new">Pexeso</a></li>
+        </ol>
+    </div>
+    <!--/*@thymesVar id="userController" type="sk.tuke.gamestudio.server.controller.UserController"*/-->
+    <span th:if="not ${@userController.logged}">
+        <div class="login-container">
+            Please login to save score, comment and rate our games!<br/>
+            <form action="/login" method="post">
+                Login:<input type="text" name="login"><br/>
+                Password:<input type="password" name="passwd"><br/>
+                <input type="submit" value="Login"/>
+            </form>
+        </div>
+    </span>
+</main>
+
+</html>
+
+<!--
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/template.html}">
+
+<head>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+
+<main layout:fragment="content">
+    Our favorite games:<br/>
+    <ol>
+        <li><a href="/pexeso/new">Pexeso</a></li>
+    </ol>
+
+    &lt;!&ndash;/*@thymesVar id="userController" type="sk.tuke.gamestudio.server.controller.UserController"*/&ndash;&gt;
+    <span th:if="not ${@userController.logged}">
+        Please login to save score, comment and rate our games!<br/>
+        <form action="/login" method="post">
+            Login:<input type="text" name="login"><br/>
+            Password:<input type="password" name="passwd"><br/>
+            <input type="submit" value="Login"/>
+        </form>
+    </span>
+</main>
+
+</html>
+-->

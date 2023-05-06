@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layout/template.html}">
+    <!--/*@thymesVar id="minesController" type="sk.tuke.gamestudio.server.controller.PexesoController"*/-->
+<head>
+    <meta charset="UTF-8">
+    <title>Gamestudio</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+    <!--<script th:src="@{/js/script.js}"></script>-->
+
+</head>
+
+<!--<body>-->
+<main layout:fragment="content">
+    <h1>Pexeso</h1>
+
+
+
+<!--    <a class="abutton" href="/pexeso/new">New Game</a>-->
+    <div class="content">
+        <h2>Attempts: <span id="attempt-counter">0</span></h2>
+        <section class ="pexeso-board" th:utext="${@pexesoController.getHtmlPexesoBoard()}"></section>
+    </div>
+
+    <script th:src="@{/js/script.js}"></script>
+    <script th:inline="javascript">
+          /*<![CDATA[*/
+            var loggedInUsername = [[${@userController.logged ? @userController.loggedUser.login : null}]];
+          /*]]>*/
+    </script>
+
+    <!--</body>-->
+
+    <!-- Table with best scores -->
+    <!--/*@thymesVar id="scores" type="java.util.List<sk.tuke.gamestudio.entity.Score>"*/-->
+    <!--<div th:replace="fragments/fragments :: scores(${scores})"/>-->
+
+    <!-- Add a form for submitting comments -->
+    <div class="comment-form-container" th:if="${@userController.logged}">
+        <form id="comment-form" method="post">
+            <label for="comment">Comment:</label>
+            <textarea id="comment" name="comment" rows="4" cols="50" required></textarea>
+            <br>
+            <button type="submit">Submit Comment</button>
+        </form>
+    </div>
+
+    <script th:src="@{/js/comment.js}"></script>
+
+    <div class="rating-form-container" th:if="${@userController.logged}">
+        <form id="rating-form" method="post">
+            <label for="rating">Rate this game:</label>
+            <select id="rating" name="rating" required>
+                <option value="" disabled selected>Select rating</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select>
+            <button type="submit">Submit Rating</button>
+        </form>
+    </div>
+    <script th:src="@{/js/ratings.js}"></script>
+
+   <!-- <div class="rating-form-container" th:if="${@userController.logged}">
+        <form id="rating-form" method="post">
+            <label for="rating-5">Rate this game:</label>
+            <div class="rating-stars-container">
+                <input type="radio" name="rating" id="rating-5" value="5" required><label for="rating-5" class="rating-stars">&#9733;</label>
+                <input type="radio" name="rating" id="rating-4" value="4"><label for="rating-4" class="rating-stars">&#9733;</label>
+                <input type="radio" name="rating" id="rating-3" value="3"><label for="rating-3" class="rating-stars">&#9733;</label>
+                <input type="radio" name="rating" id="rating-2" value="2"><label for="rating-2" class="rating-stars">&#9733;</label>
+                <input type="radio" name="rating" id="rating-1" value="1"><label for="rating-1" class="rating-stars">&#9733;</label>
+            </div>
+            <button type="submit">Submit Rating</button>
+        </form>
+    </div>-->
+
+
+
+</main>
+</html>
+
+
+
+
+
+

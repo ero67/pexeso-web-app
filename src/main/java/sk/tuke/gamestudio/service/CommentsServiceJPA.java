@@ -21,7 +21,7 @@ public class CommentsServiceJPA implements CommentsService {
     public List<Comment> getComments(String game) {
         return entityManager.createQuery("select s from Comment s where s.game =:game")
                 .setParameter("game",game)
-                .setMaxResults(10)
+                .setMaxResults(100)
                 .getResultList();
 
     }
@@ -34,3 +34,5 @@ public class CommentsServiceJPA implements CommentsService {
 
 
 }
+
+

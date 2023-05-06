@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/template.html}">
+<head>
+    <meta charset="UTF-8">
+    <title>Gamestudio</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+
+<main layout:fragment="content">
+    <h1>Pexeso</h1>
+    <div th:replace="fragments/fragments :: ratings(${averageRating}, ${userRating})"/>
+</main>
+</html>
+
+

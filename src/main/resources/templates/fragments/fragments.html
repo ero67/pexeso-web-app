@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<header th:fragment="header">
+    <h1>Welcome to <a href="/">Gamestudio!</a></h1>
+
+
+    <!--<div th:if="not ${@userController.logged}">
+        Not logged. Please
+        <a href="/">login</a>.
+    </div>-->
+</header>
+
+<div th:fragment="navbar">
+    <div class="topnav">
+        <a href="/">Main menu</a>
+        <a href="/pexeso/new">New Game</a>
+        <a href="/pexeso/scores">Highest Scores</a>
+        <a href="/pexeso/comments">Comments</a>
+        <a href="/pexeso/ratings">Rating</a>
+
+        <!--/*@thymesVar id="userController" type="sk.tuke.gamestudio.server.controller.UserController"*/-->
+        <div class="login" th:if="${@userController.logged}">
+            <span class="logged-as">Logged as: <span th:text="${@userController.loggedUser.login}"/></span>
+            <a th:href="@{/logout}" class="logout">Logout</a>
+        </div>
+    </div>
+</div>
+
+
+
+<footer th:fragment="footer">
+    <hr/>
+    <span>&copy; 2023 Gamestudio was developed at <a href="http://kpi.fei.tuke.sk">KPI FEI TUKE by Erik Laki </a></span>
+</footer>
+
+
+
+<div th:fragment="comments(comments)">
+    <h2>Top comments</h2>
+    <div class="comments">
+        <!--/*@thymesVar id="comments" type="java.util.List<sk.tuke.gamestudio.entity.Comment>"*/-->
+        <div th:each="comment, it : ${comments}" class="comment">
+            <div class="comment-info">
+                <span class="comment-player" th:text="${comment.player}"></span>
+                <span class="comment-date" th:text="${#dates.format(comment.commentedAt, 'dd.MM.yyyy HH:mm')}"></span>
+            </div>
+            <div class="comment-text" th:text="${comment.comment}"></div>
+        </div>
+    </div>
+</div>
+
+
+<div th:fragment="scores(scores)">
+    <h2>Top scores</h2>
+    <table class="scores">
+        <thead>
+        <tr>
+            <th>No.</th>
+            <th>Player</th>
+            <th>Points</th>
+            <th>Played at</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!--/*@thymesVar id="scores" type="java.util.List<sk.tuke.gamestudio.entity.Score>"*/-->
+        <tr th:each="score, it : ${scores}">
+            <td th:text="${it.index + 1}"/>
+            <td th:text="${score.player}"/>
+            <td th:text="${score.points}"/>
+            <td th:text="${#dates.format(score.playedAt, 'dd.MM.yyyy HH:mm')}"/>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+
+<!--/*@thymesVar id="ratings" type="java.util.List<sk.tuke.gamestudio.entity.Rating>"*/-->
+
+<div th:fragment="ratings(averageRating, userRating)">
+    <h2>Ratings</h2>
+    <div class="ratings">
+        <div class="average-rating">
+            <span>Average rating: </span>
+            <span th:text="${#numbers.formatDecimal(averageRating, 0, 2)}"></span>
+        </div>
+       <!-- <div th:if="${userRating != null}" class="player-rating">-->
+            <div th:if="${@userController.logged}" class="player-rating">
+            <span>Your rating: </span>
+            <span th:text="${userRating}"></span>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+</html>

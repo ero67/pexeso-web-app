@@ -17,7 +17,7 @@ class PexesoGameUITest {
     @Test
     public void testGameEndsWhenAllPairsFound() {
         // create a new Pexeso game
-        PexesoBoard pexesoBoard = new PexesoBoard(2);
+        PexesoBoard pexesoBoard = new PexesoBoard(2,2);
 
         // randomly flip all cards to get all pairs
         for (int i = 0; i < pexesoBoard.getSize(); i++) {
@@ -35,7 +35,7 @@ class PexesoGameUITest {
 
     @Test
     public void testFlipCardFuntion() {
-        PexesoBoard pexesoBoard = new PexesoBoard(2);
+        PexesoBoard pexesoBoard = new PexesoBoard(2,2);
         PexesoCard card = pexesoBoard.getCard(0, 0);
         boolean flipped = pexesoBoard.flip(card);
         assertTrue(flipped);
@@ -44,7 +44,7 @@ class PexesoGameUITest {
 
     @Test
     public void testCompareCards() {
-        PexesoBoard pexesoBoard = new PexesoBoard(2);
+        PexesoBoard pexesoBoard = new PexesoBoard(2,2);
 
         PexesoCard card1 = new PexesoCard("A");
         PexesoCard card2 = new PexesoCard("A");
@@ -57,7 +57,7 @@ class PexesoGameUITest {
 
     @Test
     public void testCompareCardsWrong() {
-        PexesoBoard pexesoBoard = new PexesoBoard(2);
+        PexesoBoard pexesoBoard = new PexesoBoard(2,2);
 
         PexesoCard card1 = new PexesoCard("A");
         PexesoCard card2 = new PexesoCard("B");
@@ -75,7 +75,7 @@ class PexesoGameUITest {
         ByteArrayInputStream inputStream = new ByteArrayInputStream("0 1".getBytes());
         System.setIn(inputStream);
         Scanner scanner = new Scanner(System.in);
-        PexesoBoard pexesoBoard = new PexesoBoard(2);
+        PexesoBoard pexesoBoard = new PexesoBoard(2,2);
         PexesoGameUI pexesoGame = new PexesoGameUI(pexesoBoard);
         // execute
         int[] result = pexesoGame.processInput(scanner);
@@ -93,7 +93,7 @@ class PexesoGameUITest {
         ByteArrayInputStream inputStream = new ByteArrayInputStream("invalid input".getBytes());
         System.setIn(inputStream);
         Scanner scanner = new Scanner(System.in);
-        PexesoBoard pexesoBoard = new PexesoBoard(2);
+        PexesoBoard pexesoBoard = new PexesoBoard(2,2);
         PexesoGameUI pexesoGame = new PexesoGameUI(pexesoBoard);
         // execute
         int[] result = pexesoGame.processInput(scanner);
@@ -108,7 +108,7 @@ class PexesoGameUITest {
         ByteArrayInputStream inputStream = new ByteArrayInputStream("0 8".getBytes());
         System.setIn(inputStream);
         Scanner scanner = new Scanner(System.in);
-        PexesoBoard pexesoBoard = new PexesoBoard(2);
+        PexesoBoard pexesoBoard = new PexesoBoard(2,2);
         PexesoGameUI pexesoGame = new PexesoGameUI(pexesoBoard);
         // execute
         int[] result = pexesoGame.processInput(scanner);
