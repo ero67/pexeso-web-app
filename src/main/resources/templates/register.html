@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/template}">
+<head>
+    <meta charset="UTF-8">
+    <title>Registration</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+
+<main layout:fragment="content">
+    <h1>Register</h1>
+    <div th:replace="fragments/fragments :: registerForm"/>
+</main>
+
+<script th:src="@{/js/register.js}"></script>
+</html>

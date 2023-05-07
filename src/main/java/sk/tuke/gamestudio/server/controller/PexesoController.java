@@ -172,7 +172,7 @@ public class PexesoController {
         return "rating";
     }*/
 
-    @GetMapping("/ratings")
+    /*@GetMapping("/ratings")
     public String ratings(Model model, HttpSession session) {
         User loggedUser = (User) session.getAttribute("loggedUser");
         if (loggedUser != null) {
@@ -180,7 +180,18 @@ public class PexesoController {
         }
         model.addAttribute("averageRating", ratingsService.getAverageRating("pexeso"));
         return "rating";
+    }*/
+
+    @GetMapping("/ratings")
+    public String ratings(Model model, HttpSession session) {
+        User loggedUser = (User) session.getAttribute("loggedUser");
+        if (loggedUser != null) {
+            model.addAttribute("userRating", ratingsService.getRating("pexeso", loggedUser.getUsername()));
+        }
+        model.addAttribute("averageRating", ratingsService.getAverageRating("pexeso"));
+        return "rating";
     }
+
 
     /*@GetMapping("/ratings")
     public String ratings(Model model, HttpSession session) {
@@ -194,6 +205,7 @@ public class PexesoController {
         }
         return "rating";
     }*/
+
 
 
 

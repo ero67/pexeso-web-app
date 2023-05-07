@@ -23,6 +23,7 @@ console.log('Submitting comment:', comment);
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
+    alert('Thank you for your comment!');
   } catch (error) {
     console.error('Failed to submit comment:', error);
   }

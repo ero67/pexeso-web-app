@@ -28,6 +28,16 @@ public class GameStudioServer {
     public RatingsService ratingsService(){
         return new RatingServiceJPA();
     }
+
+
+
+    @Bean
+    public UserService userService() {
+        return new UserServiceJPA(); // Replace with your UserService implementation
+    }
+
+
+
 }
 
 

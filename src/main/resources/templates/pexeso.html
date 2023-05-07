@@ -19,6 +19,13 @@
 
 <!--    <a class="abutton" href="/pexeso/new">New Game</a>-->
     <div class="content">
+
+        <div id="timer-wrapper">
+            <div id="timer">Time remaining: <span id="time"></span></div>
+        </div>
+
+
+
         <h2>Attempts: <span id="attempt-counter">0</span></h2>
         <section class ="pexeso-board" th:utext="${@pexesoController.getHtmlPexesoBoard()}"></section>
     </div>
@@ -26,7 +33,7 @@
     <script th:src="@{/js/script.js}"></script>
     <script th:inline="javascript">
           /*<![CDATA[*/
-            var loggedInUsername = [[${@userController.logged ? @userController.loggedUser.login : null}]];
+            var loggedInUsername = [[${@userController.logged ? @userController.loggedUser.username : null}]];
           /*]]>*/
     </script>
 
@@ -37,7 +44,7 @@
     <!--<div th:replace="fragments/fragments :: scores(${scores})"/>-->
 
     <!-- Add a form for submitting comments -->
-    <div class="comment-form-container" th:if="${@userController.logged}">
+    <div class="comment-form-container" th:if="${@userController.isLogged}">
         <form id="comment-form" method="post">
             <label for="comment">Comment:</label>
             <textarea id="comment" name="comment" rows="4" cols="50" required></textarea>

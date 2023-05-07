@@ -18,15 +18,17 @@ h2{
 
 .body {
   margin: 0;
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
-  background: #060AB2;
+  flex-direction: column;
+  background: #ffffff;
 }
 
+
 .page-content {
-  height: 100vh;
+  flex-grow: 1;
   display: flex;
-  background: #060AB2; /* Change this value to your desired page background color */
+  background: #ffffff;
 }
 
 /*.content {
@@ -47,6 +49,8 @@ h2{
   width: calc(25% - 10px);
  /* height: calc(33.333% - 10px);*/
   height: calc(25% - 10px);
+  /*width: calc(12.5% - 10px);
+  height: calc(12.5% - 10px);*/
   margin: 5px;
   position: relative;
   transform: scale(1);
@@ -68,6 +72,7 @@ h2{
 .back-face {
   width: 100%;
   height: 100%;
+
   padding: 20px;
   position: absolute;
   border-radius: 5px;
@@ -94,8 +99,8 @@ h2{
    box-sizing: border-box;
    border: 0;
    font-size: 16px;
-   position: relative; /* Add this line */
-   top: 20px; /* Add this line and adjust the value as needed */
+   position: relative;
+   top: 20px;
 }
 
 
@@ -353,17 +358,29 @@ table.scores tr:first-child {
 .login-container input[type="submit"]:hover {
     background-color: #45a049;
 }
+.registerbutton {
+    width: 100%;
+    padding: 8px;
+    background-color: #007FFF;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 12px;
+    text-align: center;
+}
+
+.registerbutton:hover {
+    background-color: #0066b2;
+}
 
 
-/*footer {
-  position: fixed;
-  left: 0;
-  bottom: 0;
+footer {
   width: 100%;
   background-color: #f5f5f5;
   text-align: center;
   padding: 10px;
-}*/
+}
 /*comment form css*/
 .comment-form-container {
   display: flex;
@@ -469,7 +486,7 @@ table.scores tr:first-child {
   flex-direction: column;
   align-items: center;
   gap: 1rem;
-  background-color: #f0f0f0;
+  /*background-color: #f0f0f0;*/
   padding: 1rem;
   border-radius: 1rem;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -483,7 +500,7 @@ table.scores tr:first-child {
 
 .rating-form-container select {
   font-size: 1rem;
-  width: 100px;
+  width: 150px;
   padding: 0.5rem;
   border-radius: 5px;
   border: 1px solid #ccc;
@@ -546,6 +563,112 @@ table.scores tr:first-child {
 .favorite-games a:hover {
   color: #007bff;
 }
+
+
+.register-container {
+  width: 400px;
+  margin: auto;
+  text-align: center;
+  padding: 16px;
+}
+
+#register-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#register-form label {
+  font-size: 18px;
+  margin-bottom: 8px;
+}
+
+#register-form input[type="text"], #register-form input[type="password"] {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 16px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+#register-form button[type="submit"] {
+  width: 100%;
+  padding: 8px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 12px;
+}
+
+#register-form button[type="submit"]:hover {
+  background-color: #45a049;
+}
+
+
+/* Timer container */
+#timer-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+#timer {
+  font-family: Arial, sans-serif;
+  font-size: 1.2em;
+  font-weight: bold;
+  color: #333;
+  background-color: #f8f8f8;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: inline-block;
+  margin-bottom: 20px;
+}
+
+
+/* Timer text */
+#timer #time {
+  color: #e74c3c;
+}
+
+
+#difficulty-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  padding: 20px;
+  border-radius: 5px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+#difficulty-form label {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+}
+
+#start-game-button {
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+#start-game-button:hover {
+  background-color: #45a049;
+}
+
 
 
 

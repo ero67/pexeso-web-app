@@ -7,6 +7,24 @@ let firstCard, secondCard;
 let attempts = 0;
 let matchedPairs = 0;
 const totalPairs = cards.length / 2;
+let timerStarted = false;
+const urlParams = new URLSearchParams(window.location.search);
+const selectedDifficulty = urlParams.get('difficulty');
+
+let timeLimitInSeconds;
+
+if (selectedDifficulty === "easy") {
+  timeLimitInSeconds = 120; // Set the time limit for easy difficulty
+} else if (selectedDifficulty === "medium") {
+  timeLimitInSeconds = 50; // Set the time limit for medium difficulty
+} else if (selectedDifficulty === "hard") {
+  timeLimitInSeconds = 30; // Set the time limit for hard difficulty
+}
+  else if(selectedDifficulty==null){
+  timeLimitInSeconds=120;
+}
+
+
 
 
 function flipCard(element) {
@@ -15,6 +33,11 @@ function flipCard(element) {
   if (element === firstCard) return;
 
   element.classList.add('flip');
+
+  if (!timerStarted) {
+      startTimer(timeLimitInSeconds);
+      timerStarted = true;
+    }
 
   if (!hasFlippedCard) {
     // first click
@@ -53,8 +76,10 @@ function checkForMatch() {
   isMatch ? disableCards() : unflipCards();
 
   if (matchedPairs === totalPairs) {
-    showWinMessage();
+    /*showWinMessage();*/
     saveAttempts(attempts);
+    showWinMessage();
+    clearInterval(timer);
   }
 }
 
@@ -121,7 +146,7 @@ function unflipCards() {
     secondCard.classList.remove('flip');
 
     resetBoard();
-  }, 1500);
+  }, 1000);
 }
 
 function resetBoard() {
@@ -129,44 +154,84 @@ function resetBoard() {
   [firstCard, secondCard] = [null, null];
 }
 
-/*async function submitComment(commentText) {
-  const playerName = loggedInUsername || 'Anonymous';
-  if (playerName === 'Anonymous') {
-    return;
-  }
+let timer;
+let timeRemaining;
 
-  const currentTimestamp = new Date();
+function startTimer(timeLimitInSeconds) {
+  timeRemaining = timeLimitInSeconds;
+  updateTimerDisplay();
 
-  const comment = {
-    player: playerName,
-    game: 'pexeso',
-    comment: commentText,
-    commented_at: currentTimestamp.toISOString()
-  };
+  timer = setInterval(() => {
+    timeRemaining--;
 
-  try {
-    const response = await fetch('http://localhost:8080/api/comment', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(comment),
-    });
-
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+    if (timeRemaining <= 0) {
+      clearInterval(timer);
+      handleGameOver();
+    } else {
+      updateTimerDisplay();
     }
-  } catch (error) {
-    console.error('Failed to submit comment:', error);
-  }
+  }, 1000);
 }
 
-document.getElementById('comment-form').addEventListener('submit', async (event) => {
-  event.preventDefault();
-  const commentText = document.getElementById('comment').value;
-  await submitComment(commentText);
-});*/
+function updateTimerDisplay() {
+  const minutes = Math.floor(timeRemaining / 60);
+  const seconds = timeRemaining % 60;
+  document.getElementById("time").textContent = `${minutes}:${seconds.toString().padStart(2, "0")}`;
+}
 
+function handleGameOver() {
+  // ...
+  alert("Time's up! Game Over.");
+  resetGame();
+}
+
+
+function resetGame() {
+  // Stop the timer
+  clearInterval(timer);
+  timerStarted = false;
+
+  // Reset the game state
+  attempts = 0;
+  matchedPairs = 0;
+  hasFlippedCard = false;
+  lockBoard = false;
+  firstCard = null;
+  secondCard = null;
+  document.getElementById('attempt-counter').textContent = attempts;
+
+  // Reset the timer display
+  document.getElementById("time").textContent = "0:00";
+
+  // Unflip all cards
+  cards.forEach(card => {
+    card.classList.remove('flip');
+    card.classList.remove('matched');
+    card.onclick = () => flipCard(card);
+  });
+
+  // Shuffle the cards or reset the game board
+  // ...
+}
+
+function startPexesoGame() {
+  const difficulty = document.querySelector('input[name="difficulty"]:checked').value;
+  let timeLimitInSeconds;
+
+  switch (difficulty) {
+    case 'easy':
+      timeLimitInSeconds = 180; // You can set the desired time limit for easy difficulty
+      break;
+    case 'medium':
+      timeLimitInSeconds = 120; // You can set the desired time limit for medium difficulty
+      break;
+    case 'hard':
+      timeLimitInSeconds = 60; // You can set the desired time limit for hard difficulty
+      break;
+  }
+
+  // You can also set any other game parameters based on difficulty here
+}
 
 
 
